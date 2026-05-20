@@ -1,32 +1,39 @@
 import React, { createContext, useState } from 'react';
 import enTranslations from '../i18n/en.json';
 import esTranslations from '../i18n/es.json';
+import frTranslations from '../i18n/fr.json';
 
-export type Language = 'en' | 'es';
+// Single source of truth for language metadata and dictionaries
+export const SUPPORTED_LANGUAGES = {
+  en: { label: 'English', dictionary: enTranslations as Record<string, string> },
+  es: { label: 'Español', dictionary: esTranslations as Record<string, string> },
+  fr: { label: 'Français', dictionary: frTranslations as Record<string, string> },
+} as const;
 
-const dictionaries: Record<Language, Record<string, string>> = {
-  en: enTranslations as Record<string, string>,
-  es: esTranslations as Record<string, string>,
-};
+export type Language = keyof typeof SUPPORTED_LANGUAGES;
 
 interface LanguageContextProps {
   lang: Language;
   changeLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  supportedLanguages: { code: Language; label: string }[];
 }
 
 export const LanguageContext = createContext<LanguageContextProps>({
   lang: 'en',
   changeLanguage: () => {},
   t: (key: string) => key,
+  supportedLanguages: [],
 });
 
 const getInitialLanguage = (): Language => {
-  const stored = localStorage.getItem('portfolio_lang');
-  if (stored === 'en' || stored === 'es') return stored;
+  const stored = localStorage.getItem('portfolio_lang') as Language | null;
+  if (stored && stored in SUPPORTED_LANGUAGES) return stored;
   
-  const browserLang = navigator.language.split('-')[0];
-  return browserLang === 'es' ? 'es' : 'en';
+  const browserLang = navigator.language.split('-')[0] as Language;
+  if (browserLang in SUPPORTED_LANGUAGES) return browserLang;
+  
+  return 'en';
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -38,11 +45,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const t = (key: string): string => {
-    return dictionaries[lang]?.[key] || dictionaries['en']?.[key] || key;
+    return SUPPORTED_LANGUAGES[lang]?.dictionary?.[key] || SUPPORTED_LANGUAGES['en']?.dictionary?.[key] || key;
   };
 
+  // Derive supported languages list dynamically from the source of truth
+  const supportedLanguages = Object.entries(SUPPORTED_LANGUAGES).map(([code, info]) => ({
+    code: code as Language,
+    label: info.label,
+  }));
+
   return (
-    <LanguageContext.Provider value={{ lang, changeLanguage, t }}>
+    <LanguageContext.Provider value={{ lang, changeLanguage, t, supportedLanguages }}>
       {children}
     </LanguageContext.Provider>
   );

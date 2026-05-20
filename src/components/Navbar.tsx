@@ -4,20 +4,23 @@ import { useObservable } from '../hooks/useObservable';
 import { ThemeService } from '../services/ThemeService';
 import type { Theme } from '../services/ThemeService';
 import { Palette, Globe, Menu, X, Terminal } from 'lucide-react';
+import type { Language } from '../context/LanguageContext';
 
 export const Navbar: React.FC = () => {
-  const { t, lang, changeLanguage } = useTranslation();
+  const { t, lang, changeLanguage, supportedLanguages } = useTranslation();
   const activeTheme = useObservable(ThemeService.activeTheme$, ThemeService.getTheme());
   const [isOpen, setIsOpen] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
-
-  const toggleLanguage = () => {
-    changeLanguage(lang === 'en' ? 'es' : 'en');
-  };
+  const [showLangMenu, setShowLangMenu] = useState(false);
 
   const selectTheme = (theme: Theme) => {
     ThemeService.setTheme(theme);
     setShowThemeMenu(false);
+  };
+
+  const selectLanguage = (code: Language) => {
+    changeLanguage(code);
+    setShowLangMenu(false);
   };
 
   const navLinks = [
@@ -51,18 +54,44 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-glass-border bg-glass-bg hover:border-primary text-sm font-semibold transition-all cursor-pointer text-text-primary"
-            title="Toggle Language"
-          >
-            <Globe className="w-4 h-4 text-secondary" />
-            <span>{lang.toUpperCase()}</span>
-          </button>
-
+          {/* Language Dropdown */}
           <div className="relative">
             <button
-              onClick={() => setShowThemeMenu(!showThemeMenu)}
+              onClick={() => {
+                setShowLangMenu(!showLangMenu);
+                setShowThemeMenu(false);
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-glass-border bg-glass-bg hover:border-primary text-sm font-semibold transition-all cursor-pointer text-text-primary"
+              title="Select Language"
+            >
+              <Globe className="w-4 h-4 text-secondary" />
+              <span>{lang.toUpperCase()}</span>
+            </button>
+
+            {showLangMenu && (
+              <div className="absolute right-0 mt-2 w-36 rounded-xl glass-panel border border-glass-border bg-bg-secondary p-1 shadow-2xl z-50">
+                {supportedLanguages.map((language) => (
+                  <button
+                    key={language.code}
+                    onClick={() => selectLanguage(language.code)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-glass-bg cursor-pointer ${
+                      lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
+                    }`}
+                  >
+                    {language.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Theme Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowThemeMenu(!showThemeMenu);
+                setShowLangMenu(false);
+              }}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-glass-border bg-glass-bg hover:border-primary text-sm font-semibold transition-all cursor-pointer capitalize text-text-primary"
               title="Change Theme"
             >
@@ -90,19 +119,45 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile menu triggers */}
         <div className="flex md:hidden items-center gap-3">
-          <button
-            onClick={toggleLanguage}
-            className="p-1.5 rounded-lg border border-glass-border bg-glass-bg text-text-primary text-xs font-bold cursor-pointer"
-          >
-            {lang.toUpperCase()}
-          </button>
-
+          {/* Mobile Language Dropdown */}
           <div className="relative">
             <button
-              onClick={() => setShowThemeMenu(!showThemeMenu)}
+              onClick={() => {
+                setShowLangMenu(!showLangMenu);
+                setShowThemeMenu(false);
+              }}
+              className="p-1.5 rounded-lg border border-glass-border bg-glass-bg text-text-primary text-xs font-bold cursor-pointer"
+            >
+              {lang.toUpperCase()}
+            </button>
+
+            {showLangMenu && (
+              <div className="absolute right-0 mt-2 w-28 rounded-xl glass-panel border border-glass-border bg-bg-secondary p-1 shadow-2xl z-50">
+                {supportedLanguages.map((language) => (
+                  <button
+                    key={language.code}
+                    onClick={() => selectLanguage(language.code)}
+                    className={`w-full text-left px-2.5 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-glass-bg cursor-pointer ${
+                      lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
+                    }`}
+                  >
+                    {language.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Theme Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowThemeMenu(!showThemeMenu);
+                setShowLangMenu(false);
+              }}
               className="p-1.5 rounded-lg border border-glass-border bg-glass-bg text-text-primary cursor-pointer"
             >
-              <Palette className="w-4.5 h-4.5" />
+              <Palette className="w-4.5 h-4.5 animate-pulse" />
             </button>
             {showThemeMenu && (
               <div className="absolute right-0 mt-2 w-32 rounded-xl glass-panel border border-glass-border bg-bg-secondary p-1 shadow-2xl z-50">
