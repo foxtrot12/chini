@@ -30,16 +30,17 @@ chini/
 │   │   ├── Navbar.tsx            # Sticky navigation and toggles
 │   │   ├── Projects.tsx          # Grid filters and catalog
 │   │   └── Skills.tsx            # Technical credentials grids
-│   ├── hooks/            # Custom React hooks consuming RxJS
+│   ├── context/          # React Context providers
+│   │   └── LanguageContext.tsx   # Context-based translation provider
+│   ├── hooks/            # Custom React hooks consuming RxJS or context
 │   │   ├── useObservable.ts      # Custom hook to subscribe to streams
-│   │   └── useTranslation.ts     # Locale translation wrapper
+│   │   └── useTranslation.ts     # Context wrapper for translation
 │   ├── i18n/             # Dictionary files for language translations
 │   │   ├── en.json               # English locales
 │   │   └── es.json               # Spanish locales
 │   ├── services/         # RxJS BehaviorSubject logic layers
 │   │   ├── ProjectService.ts     # Project catalog fetch simulation
-│   │   ├── ThemeService.ts       # Layout theme coordinator
-│   │   └── TranslationService.ts # Locale controller
+│   │   └── ThemeService.ts       # Layout theme coordinator
 │   ├── App.tsx           # Layout root assembler
 │   ├── index.css         # Styling system & Tailwind overrides
 │   └── main.tsx          # Document mount point
