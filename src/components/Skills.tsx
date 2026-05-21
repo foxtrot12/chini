@@ -14,28 +14,28 @@ export const Skills: React.FC = () => {
 
   const categories: SkillCategory[] = [
     {
-      title: 'Frontend Frameworks',
-      icon: <Layout className="w-6 h-6" />,
-      color: 'text-primary border-primary/20',
-      skills: ['React 19', 'Next.js', 'Vite', 'HTML5 Semantic markup'],
-    },
-    {
-      title: 'Reactive & Async',
-      icon: <Activity className="w-6 h-6" />,
-      color: 'text-secondary border-secondary/20',
-      skills: ['RxJS Streams', 'WebSockets', 'REST APIs', 'Async Programming'],
-    },
-    {
       title: 'Programming Languages',
       icon: <Code className="w-6 h-6" />,
-      color: 'text-accent border-accent/20',
-      skills: ['TypeScript', 'JavaScript (ESNext)', 'HTML5 Canvas API', 'WebGL (Basic)'],
+      color: 'text-primary border-primary/20',
+      skills: ['JavaScript', 'TypeScript'],
     },
     {
-      title: 'Styling & Design',
+      title: 'JS Frameworks and Libraries',
+      icon: <Layout className="w-6 h-6" />,
+      color: 'text-secondary border-secondary/20',
+      skills: ['Angular', 'ReactJS', 'Unity', 'Single-SPA', 'CapacitorJS'],
+    },
+    {
+      title: 'Others',
+      icon: <Activity className="w-6 h-6" />,
+      color: 'text-accent border-accent/20',
+      skills: ['HTML/CSS', 'SCSS', 'Reactive forms', 'RxJS', 'Canvas API', 'WCAG', 'Git', 'Bitbucket'],
+    },
+    {
+      title: 'Design & Methodologies',
       icon: <Cpu className="w-6 h-6" />,
       color: 'text-tertiary border-tertiary/20',
-      skills: ['Tailwind CSS v4', 'Vanilla CSS Custom Properties', 'Responsive UI/UX', 'Glassmorphism'],
+      skills: ['Hooks API', 'Mobile First Design', 'Responsive UI', 'Jira', 'Functional Programming'],
     },
   ];
 

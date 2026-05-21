@@ -66,7 +66,7 @@ export const Hero: React.FC = () => {
         {/* Social channels and mock PDF Resume */}
         <div className="flex flex-wrap items-center justify-center gap-6 mt-6">
           <a
-            href="https://github.com"
+            href="https://github.com/foxtrot12"
             target="_blank"
             rel="noopener noreferrer"
             className="text-text-secondary hover:text-primary hover:scale-110 transition-all cursor-pointer"

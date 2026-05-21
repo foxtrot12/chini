@@ -5,7 +5,7 @@ import { Mail, Copy, Check, Terminal } from 'lucide-react';
 export const Footer: React.FC = () => {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
-  const email = 'hello@chini.dev';
+  const email = 's.chinmaya@zohomail.in';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
 
         {/* Copyright notice */}
         <div className="text-xs text-text-secondary font-light">
-          &copy; {new Date().getFullYear()} Chini.dev. {t('footer.rights')}
+          &copy; {new Date().getFullYear()} Chinmaya Sharma. {t('footer.rights')}
         </div>
       </div>
     </footer>
