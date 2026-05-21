@@ -32,6 +32,7 @@
   "contact.form.send": "Send Message",
   "contact.form.sending": "Transmitting...",
   "contact.form.success": "Message sent successfully!",
+  "contact.form.phone": "Phone Number (Optional)",
   "contact.form.error.email": "Please enter a valid email address.",
   "contact.form.error.message": "Message must be at least 10 characters.",
   "contact.form.error.name": "Name is required.",

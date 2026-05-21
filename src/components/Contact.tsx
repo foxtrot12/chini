@@ -9,21 +9,33 @@ export const Contact: React.FC = () => {
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
+  const phoneRef = useRef<HTMLInputElement | null>(null);
   const messageRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
-  const [errors, setErrors] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState({ name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [submittedSelf, setSubmittedSelf] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Map internal state keys
+    const stateKey = name.includes("entry.2005620554")
+      ? "name"
+      : name.includes("entry.1045781291")
+        ? "email"
+        : name.includes("entry.1166974658")
+          ? "phone"
+          : "message";
+    
+    setFormData((prev) => ({ ...prev, [stateKey]: value }));
   };
 
   useEffect(() => {
@@ -88,30 +100,34 @@ export const Contact: React.FC = () => {
   }, [t]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const hasNameError = formData.name.trim() === "";
     const hasEmailError = !emailRegex.test(formData.email);
     const hasMessageError = formData.message.trim().length < 10;
 
     if (hasNameError || hasEmailError || hasMessageError) {
+      e.preventDefault(); // Stop native post request
       setErrors({
         name: hasNameError ? t("contact.form.error.name") : "",
         email: hasEmailError ? t("contact.form.error.email") : "",
+        phone: "",
         message: hasMessageError ? t("contact.form.error.message") : "",
       });
       return;
     }
 
     setStatus("sending");
+    setSubmittedSelf(true);
+    // Allow the native submit action to route to the iframe target
+  };
 
-    // Simulate reactive ajax response
-    setTimeout(() => {
+  const handleIframeLoad = () => {
+    if (submittedSelf) {
       setStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      setSubmittedSelf(false);
+      setFormData({ name: "", email: "", phone: "", message: "" });
       setTimeout(() => setStatus("idle"), 4000);
-    }, 1500);
+    }
   };
 
   return (
@@ -128,7 +144,19 @@ export const Contact: React.FC = () => {
         </p>
       </div>
 
+      {/* Hidden iframe target for submitting form without reloading active page */}
+      <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style={{ display: "none" }}
+        onLoad={handleIframeLoad}
+        title="Google Form Submit Handler"
+      />
+
       <form
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfL4mCFg126Se730MFpj0VCHLPz4XEIxZDxr_SSVWNUzjsGDw/formResponse"
+        method="POST"
+        target="hidden_iframe"
         onSubmit={handleSubmit}
         className="p-6 md:p-8 rounded-2xl glass-panel bg-glass-bg flex flex-col gap-6"
       >
@@ -144,11 +172,11 @@ export const Contact: React.FC = () => {
             ref={nameRef}
             type="text"
             id="name"
-            name="name"
+            name="entry.2005620554"
             value={formData.name}
             onChange={handleInputChange}
             placeholder="John Doe"
-            disabled={status === "sending"}
+            readOnly={status === "sending"}
             className="px-4 py-3 rounded-xl border border-glass-border bg-bg-secondary text-white placeholder-text-secondary/50 focus:outline-none focus:border-primary transition-colors text-sm"
           />
           {errors.name && (
@@ -171,11 +199,11 @@ export const Contact: React.FC = () => {
             ref={emailRef}
             type="email"
             id="email"
-            name="email"
+            name="entry.1045781291"
             value={formData.email}
             onChange={handleInputChange}
             placeholder="john@example.com"
-            disabled={status === "sending"}
+            readOnly={status === "sending"}
             className="px-4 py-3 rounded-xl border border-glass-border bg-bg-secondary text-white placeholder-text-secondary/50 focus:outline-none focus:border-secondary transition-colors text-sm"
           />
           {errors.email && (
@@ -184,6 +212,27 @@ export const Contact: React.FC = () => {
               <span>{errors.email}</span>
             </div>
           )}
+        </div>
+
+        {/* Phone field */}
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="phone"
+            className="text-sm font-semibold text-text-primary"
+          >
+            {t("contact.form.phone")}
+          </label>
+          <input
+            ref={phoneRef}
+            type="tel"
+            id="phone"
+            name="entry.1166974658"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="+1 (555) 000-0000"
+            readOnly={status === "sending"}
+            className="px-4 py-3 rounded-xl border border-glass-border bg-bg-secondary text-white placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors text-sm"
+          />
         </div>
 
         {/* Message field */}
@@ -197,12 +246,12 @@ export const Contact: React.FC = () => {
           <textarea
             ref={messageRef}
             id="message"
-            name="message"
+            name="entry.839337160"
             rows={5}
             value={formData.message}
             onChange={handleInputChange}
             placeholder="Tell me about your project..."
-            disabled={status === "sending"}
+            readOnly={status === "sending"}
             className="px-4 py-3 rounded-xl border border-glass-border bg-bg-secondary text-white placeholder-text-secondary/50 focus:outline-none focus:border-accent transition-colors text-sm resize-none"
           />
           {errors.message && (

@@ -28,6 +28,7 @@
   "contact.subtitle": "Vous avez un projet en tête ou vous voulez discuter ? Laissez-moi un message !",
   "contact.form.name": "Nom",
   "contact.form.email": "Adresse E-mail",
+  "contact.form.phone": "Numéro de Téléphone (Optionnel)",
   "contact.form.message": "Votre Message",
   "contact.form.send": "Envoyer le Message",
   "contact.form.sending": "Transmission en cours...",
