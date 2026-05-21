@@ -31,10 +31,12 @@ chini/
 │   │   ├── Projects.tsx          # Grid filters and catalog
 │   │   └── Skills.tsx            # Technical credentials grids
 │   ├── context/          # React Context providers
-│   │   └── LanguageContext.tsx   # Context-based translation provider
+│   │   ├── LanguageContext.tsx   # Context-based translation provider
+│   │   └── WindowSizeContext.tsx # Throttled window dimension provider
 │   ├── hooks/            # Custom React hooks consuming RxJS or context
 │   │   ├── useObservable.ts      # Custom hook to subscribe to streams
-│   │   └── useTranslation.ts     # Context wrapper for translation
+│   │   ├── useTranslation.ts     # Context wrapper for translation
+│   │   └── useWindowSize.ts      # Context wrapper for window dimensions
 │   ├── i18n/             # Dictionary files for language translations
 │   │   ├── en.json               # English locales
 │   │   └── es.json               # Spanish locales

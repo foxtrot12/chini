@@ -6,11 +6,13 @@ import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { LanguageProvider } from './context/LanguageContext';
+import { WindowSizeProvider } from './context/WindowSizeContext';
 
 function App() {
   return (
     <LanguageProvider>
-      <div className="relative min-h-screen flex flex-col selection:bg-primary selection:text-white">
+      <WindowSizeProvider>
+        <div className="relative min-h-screen flex flex-col selection:bg-primary selection:text-white">
         {/* Interactive canvas background tracking cursor */}
         <CanvasBackground />
 
@@ -31,7 +33,8 @@ function App() {
         {/* Footer copyright and contact copy */}
         <Footer />
       </div>
-    </LanguageProvider>
+    </WindowSizeProvider>
+  </LanguageProvider>
   );
 }
 

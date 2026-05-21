@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { fromEvent, animationFrameScheduler } from 'rxjs';
+import { fromEvent, animationFrameScheduler, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { ThemeService } from '../services/ThemeService';
 import type { Theme } from '../services/ThemeService';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface Particle {
   x: number;
@@ -16,8 +17,10 @@ export const CanvasBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
   const themeRef = useRef<Theme>('cyberpunk');
+  const windowSize = useWindowSize();
 
   useEffect(() => {
+    const subsManager = new Subscription(); 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -25,32 +28,28 @@ export const CanvasBackground: React.FC = () => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = windowSize.width;
+      canvas.height = windowSize.height;
     };
     resizeCanvas();
 
-    const resizeSub = fromEvent(window, 'resize')
-      .pipe(throttleTime(100))
-      .subscribe(resizeCanvas);
-
-    const mouseMoveSub = fromEvent<MouseEvent>(window, 'mousemove')
+    subsManager.add(fromEvent<MouseEvent>(window, 'mousemove')
       .pipe(throttleTime(16, animationFrameScheduler))
       .subscribe((e) => {
         mouseRef.current.x = e.clientX;
         mouseRef.current.y = e.clientY;
         mouseRef.current.active = true;
-      });
+      }));
 
-    const mouseLeaveSub = fromEvent(window, 'mouseleave').subscribe(() => {
+    subsManager.add(fromEvent(window, 'mouseleave').subscribe(() => {
       mouseRef.current.active = false;
-    });
+    }));
 
-    const themeSub = ThemeService.activeTheme$.subscribe((theme) => {
+    subsManager.add(ThemeService.activeTheme$.subscribe((theme) => {
       themeRef.current = theme;
-    });
+    }));
 
-    const particleCount = Math.min(60, Math.floor((window.innerWidth * window.innerHeight) / 25000));
+    const particleCount = Math.min(60, Math.floor((windowSize.width * windowSize.height) / 25000));
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -82,8 +81,6 @@ export const CanvasBackground: React.FC = () => {
           };
       }
     };
-
-    let animationFrameId: number;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -152,19 +149,16 @@ export const CanvasBackground: React.FC = () => {
         });
       }
 
-      animationFrameId = requestAnimationFrame(animate);
+      subsManager.add(animationFrameScheduler.schedule(animate, 0, true))
+    
     };
 
-    animate();
+    animate()
 
     return () => {
-      resizeSub.unsubscribe();
-      mouseMoveSub.unsubscribe();
-      mouseLeaveSub.unsubscribe();
-      themeSub.unsubscribe();
-      cancelAnimationFrame(animationFrameId);
+      subsManager.unsubscribe();
     };
-  }, []);
+  }, [windowSize]);
 
   return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full -z-10 pointer-events-none" />;
 };
