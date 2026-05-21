@@ -14,25 +14,25 @@ export const Skills: React.FC = () => {
 
   const categories: SkillCategory[] = [
     {
-      title: 'Programming Languages',
+      title: t('skills.category.languages'),
       icon: <Code className="w-6 h-6" />,
       color: 'text-primary border-primary/20',
       skills: ['JavaScript', 'TypeScript'],
     },
     {
-      title: 'JS Frameworks and Libraries',
+      title: t('skills.category.frameworks'),
       icon: <Layout className="w-6 h-6" />,
       color: 'text-secondary border-secondary/20',
       skills: ['Angular', 'ReactJS', 'Unity', 'Single-SPA', 'CapacitorJS'],
     },
     {
-      title: 'Others',
+      title: t('skills.category.others'),
       icon: <Activity className="w-6 h-6" />,
       color: 'text-accent border-accent/20',
       skills: ['HTML/CSS', 'SCSS', 'Reactive forms', 'RxJS', 'Canvas API', 'WCAG', 'Git', 'Bitbucket'],
     },
     {
-      title: 'Design & Methodologies',
+      title: t('skills.category.methodologies'),
       icon: <Cpu className="w-6 h-6" />,
       color: 'text-tertiary border-tertiary/20',
       skills: ['Hooks API', 'Mobile First Design', 'Responsive UI', 'Jira', 'Functional Programming'],
