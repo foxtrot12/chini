@@ -2,12 +2,14 @@ import React, { createContext, useState } from 'react';
 import enTranslations from '../i18n/en.json';
 import esTranslations from '../i18n/es.json';
 import frTranslations from '../i18n/fr.json';
+import hiTranslations from '../i18n/hi.json';
 
 // Single source of truth for language metadata and dictionaries
 export const SUPPORTED_LANGUAGES = {
   en: { label: 'English', dictionary: enTranslations as Record<string, string> },
   es: { label: 'Español', dictionary: esTranslations as Record<string, string> },
   fr: { label: 'Français', dictionary: frTranslations as Record<string, string> },
+  hi: { label: 'हिन्दी', dictionary: hiTranslations as Record<string, string> },
 } as const;
 
 export type Language = keyof typeof SUPPORTED_LANGUAGES;
