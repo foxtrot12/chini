@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
         {/* Brand logo */}
         <a href="#home" className="flex items-center gap-2 font-display text-xl font-black tracking-tight text-white hover:opacity-85">
           <Terminal className="text-primary w-6 h-6 animate-pulse" />
-          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Chini.dev</span>
+          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Chinmaya</span>
         </a>
 
         {/* Desktop Links */}
@@ -74,9 +74,8 @@ export const Navbar: React.FC = () => {
                   <button
                     key={language.code}
                     onClick={() => selectLanguage(language.code)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-glass-bg cursor-pointer ${
-                      lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
-                    }`}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-glass-bg cursor-pointer ${lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
+                      }`}
                   >
                     {language.label}
                   </button>
@@ -105,9 +104,8 @@ export const Navbar: React.FC = () => {
                   <button
                     key={theme}
                     onClick={() => selectTheme(theme)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm capitalize font-medium transition-colors hover:bg-glass-bg cursor-pointer ${
-                      activeTheme === theme ? 'text-primary bg-glass-bg' : 'text-text-secondary'
-                    }`}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm capitalize font-medium transition-colors hover:bg-glass-bg cursor-pointer ${activeTheme === theme ? 'text-primary bg-glass-bg' : 'text-text-secondary'
+                      }`}
                   >
                     {theme}
                   </button>
@@ -137,9 +135,8 @@ export const Navbar: React.FC = () => {
                   <button
                     key={language.code}
                     onClick={() => selectLanguage(language.code)}
-                    className={`w-full text-left px-2.5 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-glass-bg cursor-pointer ${
-                      lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
-                    }`}
+                    className={`w-full text-left px-2.5 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-glass-bg cursor-pointer ${lang === language.code ? 'text-primary bg-glass-bg' : 'text-text-secondary'
+                      }`}
                   >
                     {language.label}
                   </button>

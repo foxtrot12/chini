@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
         <div className="flex items-center gap-2">
           <Terminal className="text-primary w-5 h-5" />
           <span className="font-display font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Chini.dev
+            Chinmaya
           </span>
         </div>
 

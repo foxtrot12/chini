@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
             <MediumIcon className="w-6 h-6" />
           </a>
           <a
-            href="/resume.pdf"
+            href="https://foxtrot12.github.io/resume/Chinmaya_Sharma_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-glass-border bg-glass-bg text-sm text-text-primary hover:border-accent hover:text-accent transition-all cursor-pointer"
