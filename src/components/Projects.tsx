@@ -48,11 +48,10 @@ export const Projects: React.FC = () => {
           <button
             key={type}
             onClick={() => setFilterType(type)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold tracking-wide border transition-all cursor-pointer capitalize ${
-              filterType === type
+            className={`px-4 py-2 rounded-xl text-sm font-semibold tracking-wide border transition-all cursor-pointer capitalize ${filterType === type
                 ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
                 : 'bg-glass-bg border-glass-border text-text-secondary hover:border-secondary hover:text-text-primary'
-            }`}
+              }`}
           >
             {type === 'all' ? 'All Projects' : type}
           </button>
@@ -113,6 +112,7 @@ export const Projects: React.FC = () => {
                   {project.demo && (
                     <a
                       href={project.demo}
+                      target="_blank"
                       className="flex items-center gap-1.5 text-xs text-text-primary hover:text-secondary transition-colors font-semibold"
                     >
                       <ExternalLink className="w-4 h-4" />
