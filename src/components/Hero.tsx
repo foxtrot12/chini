@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
             href="#projects"
             className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-lg cursor-pointer"
           >
-            <span>View Projects</span>
+            <span>{t('hero.cta.projects')}</span>
             <ArrowRight className="w-5 h-5" />
           </a>
 
@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
             <MediumIcon className="w-6 h-6" />
           </a>
           <a
-            href="https://foxtrot12.github.io/resume/Chinmaya_Sharma_Resume.pdf"
+            href="https://foxtrot12.github.io/july-romeo/3855e646e523.html"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-glass-border bg-glass-bg text-sm text-text-primary hover:border-accent hover:text-accent transition-all cursor-pointer"
