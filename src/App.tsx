@@ -7,34 +7,38 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { LanguageProvider } from './context/LanguageContext';
 import { WindowSizeProvider } from './context/WindowSizeContext';
+import { Analytics } from "@vercel/analytics/next"
 
 function App() {
   return (
-    <LanguageProvider>
-      <WindowSizeProvider>
-        <div className="relative min-h-screen flex flex-col selection:bg-primary selection:text-white">
-        {/* Interactive canvas background tracking cursor */}
-        <CanvasBackground />
+    <>
+      <LanguageProvider>
+        <WindowSizeProvider>
+          <div className="relative min-h-screen flex flex-col selection:bg-primary selection:text-white">
+            {/* Interactive canvas background tracking cursor */}
+            <CanvasBackground />
 
-        {/* Grid overlay */}
-        <div className="grid-bg animate-fadeIn" />
+            {/* Grid overlay */}
+            <div className="grid-bg animate-fadeIn" />
 
-        {/* Navigation header */}
-        <Navbar />
+            {/* Navigation header */}
+            <Navbar />
 
-        {/* Main layout sections */}
-        <main className="flex-grow">
-          <Hero />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
+            {/* Main layout sections */}
+            <main className="flex-grow">
+              <Hero />
+              <Skills />
+              <Projects />
+              <Contact />
+            </main>
 
-        {/* Footer copyright and contact copy */}
-        <Footer />
-      </div>
-    </WindowSizeProvider>
-  </LanguageProvider>
+            {/* Footer copyright and contact copy */}
+            <Footer />
+          </div>
+        </WindowSizeProvider>
+      </LanguageProvider>
+      <Analytics />
+    </>
   );
 }
 
